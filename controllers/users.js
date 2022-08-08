@@ -51,13 +51,9 @@ const getUserInfo = async (req, res, next) => {
 
 const createUser = async (req, res, next) => {
   try {
-    const {
-      name, about, avatar, email, password,
-    } = req.body;
+    const { name, email, password } = req.body;
     const hash = await bcrypt.hash(password, 10);
-    const user = new User({
-      name, about, avatar, email, password: hash,
-    });
+    const user = new User({ name, email, password: hash });
     res.status(201).send(await user.save());
   } catch (err) {
     if (err.name === 'ValidationError') {
