@@ -2,8 +2,11 @@ require('dotenv').config();
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 const express = require('express');
 const mongoose = require('mongoose');
+const { limiter } = require('./helpers/rate-limiter');
+const cors = require('./middlewares/cors');
 const { SERVER_ERROR } = require('./errors/constants');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { routes } = require('./routes/index');
@@ -12,10 +15,14 @@ const { PORT = 3000 } = process.env;
 
 const app = express();
 
+app.use(cors);
+app.use(helmet());
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(requestLogger);
+app.use(limiter);
 
 app.use(cookieParser());
 
