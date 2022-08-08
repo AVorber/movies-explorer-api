@@ -3,7 +3,7 @@ const { celebrate, Joi } = require('celebrate');
 const { usersRoutes } = require('./users');
 const { moviesRoutes } = require('./movies');
 const NotFoundError = require('../errors/not-found-error');
-const { login, logout, createMovie } = require('../controllers/users');
+const { login, logout, createUser } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 
 const routes = express.Router();
@@ -20,7 +20,7 @@ routes.post('/signup', celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
-}), createMovie);
+}), createUser);
 
 routes.use(auth);
 routes.use('/users', usersRoutes);
