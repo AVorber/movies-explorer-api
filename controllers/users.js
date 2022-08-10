@@ -70,10 +70,10 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const { name, about } = req.body;
+    const { name, email } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
       req.user._id,
-      { name, about },
+      { name, email },
       {
         new: true,
         runValidators: true,
@@ -87,6 +87,10 @@ const updateUser = async (req, res, next) => {
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(new BadRequestError('Переданы некорректные данные'));
+      return;
+    }
+    if (err.code === 11000) {
+      next(new ConflictError('Пользователь с таким email уже существует'));
       return;
     }
     next(err);
