@@ -6,7 +6,7 @@ const BAD_MOVIE_ID_ERROR_MESSAGE = 'Некорректный id фильма';
 const NOT_FOUND_PAGE_ERROR_MESSAGE = 'Страница не найдена';
 const NOT_FOUND_USER_ERROR_MESSAGE = 'Пользователь не найден';
 const NOT_FOUND_MOVIE_ERROR_MESSAGE = 'Фильм не найден';
-const USER_ALREADY_EXIST_ERROR_MESSAGE = 'Пользователь не найден';
+const USER_ALREADY_EXIST_ERROR_MESSAGE = 'Пользователь с таким email уже существует';
 const DELETE_OTHER_USERS_MONIES_ERROR_MESSAGE = 'Нельзя удалять фильмы других пользователей';
 const SERVER_ERROR_MESSAGE = 'На сервере произошла ошибка';
 
