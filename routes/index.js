@@ -2,6 +2,7 @@ const express = require('express');
 const { usersRoutes } = require('./users');
 const { moviesRoutes } = require('./movies');
 const NotFoundError = require('../errors/not-found-error');
+const { NOT_FOUND_PAGE_ERROR_MESSAGE } = require('../errors/constants');
 const { login, logout, createUser } = require('../controllers/users');
 const auth = require('../middlewares/auth');
 const { validateLogin, validateCreateUser } = require('../middlewares/validation');
@@ -18,7 +19,7 @@ routes.use('/movies', moviesRoutes);
 routes.post('/signout', logout);
 
 routes.use('/*', (req, res, next) => {
-  next(new NotFoundError('Страница не найдена'));
+  next(new NotFoundError(NOT_FOUND_PAGE_ERROR_MESSAGE));
 });
 
 module.exports = { routes };

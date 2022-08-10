@@ -4,6 +4,11 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
 const NotFoundError = require('../errors/not-found-error');
+const {
+  BAD_USER_ID_ERROR_MESSAGE,
+  NOT_FOUND_USER_ERROR_MESSAGE,
+  USER_ALREADY_EXIST_ERROR_MESSAGE,
+} = require('../errors/constants');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -38,13 +43,13 @@ const getUserInfo = async (req, res, next) => {
   try {
     const user = await User.findById(req.user._id);
     if (!user) {
-      next(new NotFoundError('Пользователь не найден'));
+      next(new NotFoundError(NOT_FOUND_USER_ERROR_MESSAGE));
       return;
     }
     res.status(200).send({ data: user });
   } catch (err) {
     if (err.name === 'CastError') {
-      next(new BadRequestError('Некорректный id пользователя'));
+      next(new BadRequestError(BAD_USER_ID_ERROR_MESSAGE));
       return;
     }
     next(err);
@@ -59,11 +64,11 @@ const createUser = async (req, res, next) => {
     res.status(201).send(await user.save());
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new BadRequestError('Переданы некорректные данные'));
+      next(new BadRequestError());
       return;
     }
     if (err.code === 11000) {
-      next(new ConflictError('Такой пользователь уже существует'));
+      next(new ConflictError(USER_ALREADY_EXIST_ERROR_MESSAGE));
       return;
     }
     next(err);
@@ -82,17 +87,17 @@ const updateUser = async (req, res, next) => {
       },
     );
     if (!updatedUser) {
-      next(new NotFoundError('Пользователь не найден'));
+      next(new NotFoundError(NOT_FOUND_USER_ERROR_MESSAGE));
       return;
     }
     res.status(200).send(updatedUser);
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new BadRequestError('Переданы некорректные данные'));
+      next(new BadRequestError());
       return;
     }
     if (err.code === 11000) {
-      next(new ConflictError('Пользователь с таким email уже существует'));
+      next(new ConflictError(USER_ALREADY_EXIST_ERROR_MESSAGE));
       return;
     }
     next(err);
