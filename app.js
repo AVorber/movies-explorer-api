@@ -10,8 +10,7 @@ const cors = require('./middlewares/cors');
 const { SERVER_ERROR } = require('./errors/constants');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { routes } = require('./routes/index');
-
-const { PORT = 3000 } = process.env;
+const { PORT, MONGODB_CONNECTION } = require('./helpers/config');
 
 const app = express();
 
@@ -37,7 +36,7 @@ app.use((err, req, res, next) => {
   next();
 });
 
-mongoose.connect('mongodb://localhost:27017/moviesdb', {
+mongoose.connect(MONGODB_CONNECTION, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
