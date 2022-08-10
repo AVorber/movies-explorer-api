@@ -27,9 +27,11 @@ const login = async (req, res, next) => {
 };
 
 const logout = async (req, res, next) => {
-  res.clearCookie('jwt');
-  res.send({ message: 'Пользователь разлогинен' });
-  res.catch(next);
+  try {
+    res.clearCookie('jwt').send({ message: 'Пользователь разлогинен' });
+  } catch (err) {
+    next(err);
+  }
 };
 
 const getUserInfo = async (req, res, next) => {
