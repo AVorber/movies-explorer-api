@@ -5,6 +5,7 @@ const BadRequestError = require('../errors/bad-request-error');
 const ConflictError = require('../errors/conflict-error');
 const NotFoundError = require('../errors/not-found-error');
 const {
+  USER_LOGOUT_MESSAGE,
   BAD_USER_ID_ERROR_MESSAGE,
   NOT_FOUND_USER_ERROR_MESSAGE,
   USER_ALREADY_EXIST_ERROR_MESSAGE,
@@ -33,7 +34,7 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    res.clearCookie('jwt').send({ message: 'Пользователь разлогинен' });
+    res.clearCookie('jwt').send({ message: USER_LOGOUT_MESSAGE });
   } catch (err) {
     next(err);
   }
