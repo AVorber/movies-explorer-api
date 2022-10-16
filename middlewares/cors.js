@@ -1,8 +1,8 @@
 const allowedCors = [
-  'http://arebrov.students.nomoredomains.xyz',
-  'https://arebrov.students.nomoredomains.xyz',
-  'http://api.arebrov.students.nomoredomains.xyz',
-  'https://api.arebrov.students.nomoredomains.xyz',
+  'http://arebrov.diploma.nomoredomains.icu',
+  'https://arebrov.diploma.nomoredomains.icu',
+  'http://api.arebrov.diploma.nomoredomains.sbs',
+  'https://api.arebrov.diploma.nomoredomains.sbs',
   'localhost:3000',
   'http://localhost:3000',
 ];
